@@ -1,46 +1,71 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import com.hemebiotech.symptomreader.ISymptomReader;
+import com.hemebiotech.symptomreader.ReadSymptomDataFromFile;
+import com.hemebiotech.symptomwriter.ISymptomWriter;
+import com.hemebiotech.symptomwriter.WriteSymptomAggregatedIntoFile;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;    //  TODO   :  TO CONTINUE ( SORT ? )
+
 
 public class AnalyticsCounter {
-	private static int headacheCount = 0;	// initialize to 0
-	private static int rashCount = 0;		// initialize to 0
-	private static int pupilCount = 0;		// initialize to 0
 
+	public static void analyse() throws Exception {
 
-	// 667 ekip
-
-	public static void main(String args[]) throws Exception {
-		// first get input
-		BufferedReader reader = new BufferedReader (new FileReader("symptoms.txt"));
-		String line = reader.readLine();
-
-		int i = 0;	// set i to 0
-		int headCount = 0;	// counts headaches
-		while (line != null) {
-			i++;	// increment i
-			System.out.println("symptom from file: " + line);
-			if (line.equals("headache")) {
-				headCount++;
-				System.out.println("number of headaches: " + headCount);
-			}
-			else if (line.equals("rush")) {
-				rashCount++;
-			}
-			else if (line.contains("pupils")) {
-				pupilCount++;
-			}
-
-			line = reader.readLine();	// get another symptom
-		}
-		
-		// next generate output
-		FileWriter writer = new FileWriter ("result.out");
-		writer.write("headache: " + headacheCount + "\n");
-		writer.write("rash: " + rashCount + "\n");
-		writer.write("dialated pupils: " + pupilCount + "\n");
-		writer.close();
+		List<String> listSymptoms = readSymptoms();
+		Map<String, Integer> mapSymptoms = aggregateDatas(listSymptoms) ;
+		writeAggregatedSymptoms(mapSymptoms);
 	}
+
+	private static List<String> readSymptoms()    {
+		// TODO : ça me gène de renseigner ici le chemin du fichier
+		  final  String FILE_SYMPTOMS_INPUT ="C:\\NWLS\\projets\\opcroom\\Project_DA_Java_EN_Come_to_the_Rescue_of_a_Java_Application\\Project02Eclipse\\symptoms.txt";
+		  ISymptomReader readSymptomDataFromFile = new ReadSymptomDataFromFile(FILE_SYMPTOMS_INPUT);
+			return readSymptomDataFromFile.getSymptoms() ;
+	}
+
+	private static void writeAggregatedSymptoms(Map<String, Integer>  mapSymptoms)    {
+		 final  String FILE_OUTPUT = "result.out";
+		ISymptomWriter writeSymptomAggregatedIntoFile = new WriteSymptomAggregatedIntoFile(FILE_OUTPUT);
+		writeSymptomAggregatedIntoFile.writeAggregateSymptoms(mapSymptoms);
+	}
+
+	private static Map<String, Integer> aggregateDatas(List<String> listSymptoms) {
+
+		// TODO :  remove the "for loop"  and use stream() instead
+
+		System.out.println(  "Liste des symptomes lus");
+		System.out.println(  "");
+		Map<String, Integer> mapSymptoms = new HashMap<>();
+		for (String str : listSymptoms) {
+			System.out.println(str);
+			if (mapSymptoms.containsKey(str)) {
+				mapSymptoms.put(str, mapSymptoms.get(str) + 1);
+			} else {
+				mapSymptoms.put(str, 1);
+			}
+		}
+		// logging ( to be removed probably)
+		System.out.println(  "");
+		System.out.println(  " ------------------------ ");
+		System.out.println("Résultat  : ");
+		System.out.println(  " ------------------------ ");
+		for (Entry mapEntry : mapSymptoms.entrySet()) {
+			System.out.println(mapEntry.getKey() + " =  " + mapEntry.getValue());
+		}
+		System.out.println(" ");
+		System.out.println(  "  -> enjoy ! ");
+
+		// TO DO return something SORTED ( Map or list ??? )
+		Set<Entry<String, Integer>> set = mapSymptoms.entrySet();
+		List<Entry<String, Integer>> list = new ArrayList<Entry<String, Integer>>(set);
+
+		return mapSymptoms;
+	}
+
 }
