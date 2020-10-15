@@ -1,37 +1,25 @@
 package com.hemebiotech.analytics;
 
 import com.hemebiotech.symptomreader.ISymptomReader;
-import com.hemebiotech.symptomreader.ReadSymptomDataFromFile;
 import com.hemebiotech.symptomwriter.ISymptomWriter;
-import com.hemebiotech.symptomwriter.WriteSymptomAggregatedIntoFile;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 
 public class AnalyticsCounter {
 
-	public static void analyse() throws Exception {
+	public  void analyse(ISymptomReader readSymptomDataFromFile, ISymptomWriter writeSymptomAggregatedIntoFile) throws Exception {
 
-		List<String> listSymptoms = readSymptoms();
+		List<String> listSymptoms = readSymptomDataFromFile.getSymptoms() ;
 		Map<String, Integer> mapSymptoms = aggregateDatas(listSymptoms) ;
-		writeAggregatedSymptoms(mapSymptoms);
-	}
-
-	private static List<String> readSymptoms()    {
-		// TODO : ça me gène de renseigner ici le chemin du fichier
-		final  String FILE_SYMPTOMS_INPUT ="C:\\NWLS\\projets\\opcroom\\Project_DA_Java_EN_Come_to_the_Rescue_of_a_Java_Application\\Project02Eclipse\\symptoms.txt";
-		ISymptomReader readSymptomDataFromFile = new ReadSymptomDataFromFile(FILE_SYMPTOMS_INPUT);
-		return readSymptomDataFromFile.getSymptoms() ;
-	}
-
-	private static void writeAggregatedSymptoms(Map<String, Integer>  mapSymptoms)    {
-		final  String FILE_OUTPUT = "result.out";
-		ISymptomWriter writeSymptomAggregatedIntoFile = new WriteSymptomAggregatedIntoFile(FILE_OUTPUT);
 		writeSymptomAggregatedIntoFile.writeAggregateSymptoms(mapSymptoms);
 	}
 
-	private static Map<String, Integer> aggregateDatas(List<String> listSymptoms) {
+	private  Map<String, Integer> aggregateDatas(List<String> listSymptoms) {
 
 		// TODO :  remove the "for loop"  and use stream() instead
 
