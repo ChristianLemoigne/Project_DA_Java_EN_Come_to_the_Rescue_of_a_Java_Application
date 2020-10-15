@@ -5,12 +5,8 @@ import com.hemebiotech.symptomreader.ReadSymptomDataFromFile;
 import com.hemebiotech.symptomwriter.ISymptomWriter;
 import com.hemebiotech.symptomwriter.WriteSymptomAggregatedIntoFile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;    //  TODO   :  TO CONTINUE ( SORT ? )
 
 
 public class AnalyticsCounter {
@@ -24,13 +20,13 @@ public class AnalyticsCounter {
 
 	private static List<String> readSymptoms()    {
 		// TODO : ça me gène de renseigner ici le chemin du fichier
-		  final  String FILE_SYMPTOMS_INPUT ="C:\\NWLS\\projets\\opcroom\\Project_DA_Java_EN_Come_to_the_Rescue_of_a_Java_Application\\Project02Eclipse\\symptoms.txt";
-		  ISymptomReader readSymptomDataFromFile = new ReadSymptomDataFromFile(FILE_SYMPTOMS_INPUT);
-			return readSymptomDataFromFile.getSymptoms() ;
+		final  String FILE_SYMPTOMS_INPUT ="C:\\NWLS\\projets\\opcroom\\Project_DA_Java_EN_Come_to_the_Rescue_of_a_Java_Application\\Project02Eclipse\\symptoms.txt";
+		ISymptomReader readSymptomDataFromFile = new ReadSymptomDataFromFile(FILE_SYMPTOMS_INPUT);
+		return readSymptomDataFromFile.getSymptoms() ;
 	}
 
 	private static void writeAggregatedSymptoms(Map<String, Integer>  mapSymptoms)    {
-		 final  String FILE_OUTPUT = "result.out";
+		final  String FILE_OUTPUT = "result.out";
 		ISymptomWriter writeSymptomAggregatedIntoFile = new WriteSymptomAggregatedIntoFile(FILE_OUTPUT);
 		writeSymptomAggregatedIntoFile.writeAggregateSymptoms(mapSymptoms);
 	}
@@ -61,11 +57,8 @@ public class AnalyticsCounter {
 		System.out.println(" ");
 		System.out.println(  "  -> enjoy ! ");
 
-		// TO DO return something SORTED ( Map or list ??? )
-		Set<Entry<String, Integer>> set = mapSymptoms.entrySet();
-		List<Entry<String, Integer>> list = new ArrayList<Entry<String, Integer>>(set);
-
-		return mapSymptoms;
+		Map sortedMapSymptoms = new TreeMap(mapSymptoms);
+		return sortedMapSymptoms ;
 	}
 
 }
