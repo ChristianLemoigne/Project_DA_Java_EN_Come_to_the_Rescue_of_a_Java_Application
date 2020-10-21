@@ -12,7 +12,15 @@ import java.util.TreeMap;
 
 public class AnalyticsCounter {
 
-	public  void analyse(ISymptomReader readSymptomDataFromFile, ISymptomWriter writeSymptomAggregatedIntoFile) throws Exception {
+	private ISymptomReader readSymptomDataFromFile ;
+	private ISymptomWriter writeSymptomAggregatedIntoFile ;
+
+	public   AnalyticsCounter(ISymptomReader readSymptomDataFromFile, ISymptomWriter writeSymptomAggregatedIntoFile) {
+		this.readSymptomDataFromFile = readSymptomDataFromFile ;
+		this.writeSymptomAggregatedIntoFile =writeSymptomAggregatedIntoFile ;
+	}
+
+	public  void analyse() throws Exception {
 
 		List<String> listSymptoms = readSymptomDataFromFile.getSymptoms() ;
 		Map<String, Integer> mapSymptoms = aggregateDatas(listSymptoms) ;

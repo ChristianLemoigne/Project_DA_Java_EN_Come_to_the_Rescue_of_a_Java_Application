@@ -17,8 +17,9 @@ public class Lanceur {
             ISymptomReader readSymptomDataFromFile = new ReadSymptomDataFromFile(FILE_SYMPTOMS_INPUT);
             ISymptomWriter writeSymptomAggregatedIntoFile = new WriteSymptomAggregatedIntoFile(FILE_OUTPUT);
 
-            AnalyticsCounter analyticsCounter =new AnalyticsCounter();
-            analyticsCounter.analyse(readSymptomDataFromFile, writeSymptomAggregatedIntoFile);
+            AnalyticsCounter analyticsCounter =new AnalyticsCounter(readSymptomDataFromFile,writeSymptomAggregatedIntoFile);
+            analyticsCounter.analyse();
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception f) {
