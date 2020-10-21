@@ -1,5 +1,6 @@
-package com.hemebiotech.analytics;
+package com.hemebiotech;
 
+import com.hemebiotech.analytics.AnalyticsCounter;
 import com.hemebiotech.symptomreader.ISymptomReader;
 import com.hemebiotech.symptomreader.ReadSymptomDataFromFile;
 import com.hemebiotech.symptomwriter.ISymptomWriter;
@@ -12,7 +13,7 @@ public class Lanceur {
     private static final  String FILE_SYMPTOMS_INPUT ="C:\\NWLS\\projets\\opcroom\\Project_DA_Java_EN_Come_to_the_Rescue_of_a_Java_Application\\Project02Eclipse\\symptoms.txt";
     //private static final  String FILE_SYMPTOMS_INPUT = null;  // to test  the null file in input
 
-    private static final  String FILE_OUTPUT = "result.out";
+    private static final  String FILE_OUTPUT = "results.out";
     //private static final  String FILE_OUTPUT = null;     //  to test  the null file in input
 
     public static void main(String[] args) {

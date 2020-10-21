@@ -3,11 +3,8 @@ package com.hemebiotech.analytics;
 import com.hemebiotech.symptomreader.ISymptomReader;
 import com.hemebiotech.symptomwriter.ISymptomWriter;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 
 
 public class AnalyticsCounter {
@@ -22,18 +19,22 @@ public class AnalyticsCounter {
 
 	public  void analyse() throws Exception {
 
+		System.out.println("\n*AnalyticsCounter.analyse: start");
+
 		List<String> listSymptoms = readSymptomDataFromFile.getSymptoms() ;
-		Map<String, Integer> mapSymptoms = aggregateDatas(listSymptoms) ;
-		writeSymptomAggregatedIntoFile.writeAggregateSymptoms(mapSymptoms);
+		Map<String, Integer> mapSymptomsCount = aggregateDatas(listSymptoms) ;
+		List<String> listSymptomsSorted = SortMapToList(mapSymptomsCount) ;
+		writeSymptomAggregatedIntoFile.writeAggregateSymptoms(listSymptomsSorted, mapSymptomsCount);
+
+		System.out.println("\n*AnalyticsCounter.analyse: end");
 	}
 
 	private  Map<String, Integer> aggregateDatas(List<String> listSymptoms) {
 
-		// TODO :  remove the "for loop"  and use stream() instead
-
-		System.out.println(  "Liste des symptomes lus");
+		System.out.println(  "\n** Liste des symptomes lus:");
 		System.out.println(  "");
 		Map<String, Integer> mapSymptoms = new HashMap<>();
+		/* use stream() instead of "for loop"
 		for (String str : listSymptoms) {
 			System.out.println(str);
 			if (mapSymptoms.containsKey(str)) {
@@ -42,19 +43,33 @@ public class AnalyticsCounter {
 				mapSymptoms.put(str, 1);
 			}
 		}
-		// logging ( to be removed probably)
-		System.out.println(  "");
-		System.out.println(  " ------------------------ ");
-		System.out.println("Résultat  : ");
-		System.out.println(  " ------------------------ ");
-		for (Entry mapEntry : mapSymptoms.entrySet()) {
-			System.out.println(mapEntry.getKey() + " =  " + mapEntry.getValue());
-		}
-		System.out.println(" ");
-		System.out.println(  " Fin de la liste des symptomes aggrégés par nombre d'apparition ");
+		*/
+		listSymptoms.stream().forEach(str -> {
+			System.out.println(str);
+			if (mapSymptoms.containsKey(str)) {
+				mapSymptoms.put(str, mapSymptoms.get(str) + 1);
+			} else {
+				mapSymptoms.put(str, 1);
+			}
+		});
 
-		Map sortedMapSymptoms = new TreeMap(mapSymptoms);
-		return sortedMapSymptoms ;
+		System.out.println(  "\n ** Liste des symptomes aggregés:");
+		mapSymptoms.entrySet().stream().forEach(x -> System.out.println(x.getKey() + " =  " + x.getValue()));
+
+		// Don't use treeMap  ( too easy)
+		//return new TreeMap(mapSymptoms);
+		return mapSymptoms ;
+	}
+
+	private List<String> SortMapToList (Map<String, Integer> map)  {
+
+		List<String> ListKeySet = new ArrayList<>(map.keySet());
+		Collections.sort(ListKeySet);
+
+		System.out.println("\n ** List of Sorted symptoms:");
+		ListKeySet.stream().forEach(x->System.out.println(x));
+
+		return ListKeySet;
 	}
 
 }
