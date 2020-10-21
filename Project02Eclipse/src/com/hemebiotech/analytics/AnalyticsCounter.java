@@ -51,7 +51,7 @@ public class AnalyticsCounter {
 			System.out.println(mapEntry.getKey() + " =  " + mapEntry.getValue());
 		}
 		System.out.println(" ");
-		System.out.println(  "  -> enjoy ! ");
+		System.out.println(  " Fin de la liste des symptomes aggrégés par nombre d'apparition ");
 
 		Map sortedMapSymptoms = new TreeMap(mapSymptoms);
 		return sortedMapSymptoms ;

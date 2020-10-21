@@ -16,7 +16,7 @@ import java.util.Map;
          *
          *
          */
-        void writeAggregateSymptoms (Map<String, Integer> mapSymptoms);
+        void writeAggregateSymptoms (Map<String, Integer> mapSymptoms) throws Exception;
     }
 
 
