@@ -10,7 +10,7 @@ public class AnalyticsCounter {
 	private static int pupilCount = 0;		// initialize to 0
 
 
-	// 667 ekip
+	// 667 ekip       Remodifié  pour VOIR !
 
 	public static void main(String args[]) throws Exception {
 		// first get input
