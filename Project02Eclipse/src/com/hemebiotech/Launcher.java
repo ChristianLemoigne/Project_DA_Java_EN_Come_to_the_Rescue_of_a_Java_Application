@@ -7,14 +7,13 @@ import com.hemebiotech.symptomwriter.ISymptomWriter;
 import com.hemebiotech.symptomwriter.WriteSymptomAggregatedIntoFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
-public class Lanceur {
+public class Launcher {
 
     private static final  String FILE_SYMPTOMS_INPUT ="C:\\NWLS\\projets\\opcroom\\Project_DA_Java_EN_Come_to_the_Rescue_of_a_Java_Application\\Project02Eclipse\\symptoms.txt";
-    //private static final  String FILE_SYMPTOMS_INPUT = null;  // to test  the null file in input
-
     private static final  String FILE_OUTPUT = "results.out";
-    //private static final  String FILE_OUTPUT = null;     //  to test  the null file in input
 
     public static void main(String[] args) {
 
@@ -23,18 +22,23 @@ public class Lanceur {
             ISymptomWriter writeSymptomAggregatedIntoFile = new WriteSymptomAggregatedIntoFile(FILE_OUTPUT);
 
             AnalyticsCounter analyticsCounter =new AnalyticsCounter(readSymptomDataFromFile,writeSymptomAggregatedIntoFile);
-            analyticsCounter.analyse();
+
+            List<String> listSymptoms = analyticsCounter.readSymptoms() ;
+            Map<String, Integer> mapSymptomsCount = analyticsCounter.aggregateSymptoms(listSymptoms);
+            List<String> listSymptomsSorted = analyticsCounter.sortListSymptoms(mapSymptomsCount);
+            analyticsCounter.writeSymptoms ( listSymptomsSorted,mapSymptomsCount );
+
 
         } catch (IOException e) {
-            System.out.println(" ---------------------------------------");
-            System.out.println("This is the treatement for the IOException: ");
+            System.out.println("\n ---------------------------------------");
+            System.out.println("Treatement in the \"Launcher\" for the IOException: ");
             System.out.println ("       "  + e.toString());
             System.out.println ("       "  + e.getMessage());
             System.out.println(" ---------------------------------------");
             e.printStackTrace();
-        } catch (Exception f) {
-            System.out.println(" ---------------------------------------");
-            System.out.println("This is the treatement for the Exception: " );
+        } catch (IllegalArgumentException f) {
+            System.out.println("\n ---------------------------------------");
+            System.out.println("Treatement in the \"Launcher\" for the IllegalArgumentException: " );
             System.out.println ("       "  + f.toString());
             System.out.println ("       "  + f.getMessage());
             System.out.println(" ---------------------------------------");

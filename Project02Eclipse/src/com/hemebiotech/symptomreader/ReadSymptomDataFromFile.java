@@ -3,7 +3,6 @@ package com.hemebiotech.symptomreader;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,19 +23,25 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	}
 	
 	@Override
-	public List<String> getSymptoms() throws  Exception {
+	public List<String> getSymptoms() throws IOException {
 
 		ArrayList<String> result = new ArrayList<String>();
 		if (filepath != null) {
-			BufferedReader reader = new BufferedReader (new FileReader(filepath));
-			String line = reader.readLine();
-			while (line != null) {
-				result.add(line);
-				line = reader.readLine();
+			BufferedReader reader = null;
+			try {
+				reader = new BufferedReader(new FileReader(filepath));
+				String line = reader.readLine();
+				while (line != null) {
+					result.add(line);
+					line = reader.readLine();
+				}
+			} finally {
+				if (reader != null) {
+					reader.close();
+				}
 			}
-			reader.close();
 		}  else {
-			throw (new InvalidParameterException("null filepath !")) ;
+			throw (new IllegalArgumentException("null filepath !")) ;
 		}
 		return result;
 	}

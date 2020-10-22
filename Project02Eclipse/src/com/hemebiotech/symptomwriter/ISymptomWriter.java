@@ -1,5 +1,6 @@
 package com.hemebiotech.symptomwriter;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ import java.util.Map;
          *
          *
          */
-        void writeAggregateSymptoms (List<String> listSymptoms, Map<String, Integer> mapSymptomsCount)  throws Exception;
+        void writeAggregateSymptoms (List<String> listSymptoms, Map<String, Integer> mapSymptomsCount)  throws IOException;
     }
 
 
