@@ -17,34 +17,30 @@ public class AnalyticsCounter {
 	private ISymptomReader readSymptomDataFromFile ;
 	private ISymptomWriter writeSymptomAggregatedIntoFile ;
 
+	/**
+	 * En une phrase, dire ce que tu fais le constructeur
+	 * @param readSymptomDataFromFile interface du truc
+	 * @param writeSymptomAggregatedIntoFile  totootototot
+	 */
 	public   AnalyticsCounter(ISymptomReader readSymptomDataFromFile, ISymptomWriter writeSymptomAggregatedIntoFile) {
 		this.readSymptomDataFromFile = readSymptomDataFromFile ;
 		this.writeSymptomAggregatedIntoFile =writeSymptomAggregatedIntoFile ;
 	}
 
-
-	/*
-	public  void analyse() throws IOException {
-
-		System.out.println("\n*AnalyticsCounter.analyse: start");
-
-		List<String> listSymptoms = readSymptomDataFromFile.getSymptoms() ;
-		Map<String, Integer> mapSymptomsCount = aggregateDatas(listSymptoms) ;
-		List<String> listSymptomsSorted = sortMapToList(mapSymptomsCount) ;
-		writeSymptomAggregatedIntoFile.writeAggregateSymptoms(listSymptomsSorted, mapSymptomsCount);
-
-		System.out.println("\n*AnalyticsCounter.analyse: end");
-	}
-*/
-
-
+	/**
+	 *
+	 * @return raconter ce que c'est censé  retourner  ( liste des symptoms avec doublons éventuels)
+	 * @throws IOException
+	 */
 	public  List<String>  readSymptoms() throws IOException {
 		return readSymptomDataFromFile.getSymptoms() ;
 	}
+
 	public  Map<String, Integer>  aggregateSymptoms(List<String> listSymptoms)   {
 		return aggregateDatas(listSymptoms) ;
 	}
-	public  List<String>  sortListSymptoms(Map<String, Integer> mapSymptomsAggegated)   {
+
+	public  List<String>  sortListSymptoms(Map<String, Integer>  mapSymptomsAggegated)   {
 		return sortMapToList(mapSymptomsAggegated) ;
 	}
 

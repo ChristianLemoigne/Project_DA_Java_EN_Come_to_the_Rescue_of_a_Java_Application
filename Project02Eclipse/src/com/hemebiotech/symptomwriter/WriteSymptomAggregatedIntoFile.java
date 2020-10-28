@@ -28,14 +28,10 @@ public class WriteSymptomAggregatedIntoFile implements ISymptomWriter {
     public void writeAggregateSymptoms(List<String> listSymptoms, Map<String, Integer> mapSymptomsCount)  throws IOException {
 
         if (filepath != null) {
-
-            FileWriter writer = new FileWriter(filepath);
-            try {
+            try (FileWriter writer = new FileWriter(filepath);){
                 for (String symptom : listSymptoms) {
                     writer.write( symptom + "=" + mapSymptomsCount.get(symptom) + "\n");
                 }
-            } finally {
-                writer.close();
             }
         } else {
             throw (new IllegalArgumentException("null filepath!")) ;
