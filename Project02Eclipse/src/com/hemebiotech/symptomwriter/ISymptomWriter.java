@@ -14,11 +14,14 @@ import java.util.Map;
  */
 
 public interface ISymptomWriter {
+
         /**
-         *     TODO
-         *
-         *
+         * it write the symptoms
+         * @param listSymptoms  List of symptoms, not necesary sorted
+         * @param mapSymptomsCount  map  of symptoms aggregated and their count, on line per symptom
+         * @throws IOException  if problem in writing the list of symptoms
          */
+
         void writeAggregateSymptoms (List<String> listSymptoms, Map<String, Integer> mapSymptomsCount)  throws IOException;
 }
 

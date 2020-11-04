@@ -6,22 +6,30 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Simple brute force implementation
- *
+ * Simple implementation  of interface ISymptomReader
+ * it reads the symptoms from a file, which name is in the param   filepath
  */
 public class ReadSymptomDataFromFile implements ISymptomReader {
 
 	private String filepath;
 	
 	/**
-	 * 
-	 * @param filepath a full or partial path to file with symptom strings in it, one per line
+	 * it stores the filepath ( filepath property)
+	 * @param filepath a full path to file with symptom strings in it, one per line
 	 */
 	public ReadSymptomDataFromFile (String filepath) {
 		this.filepath = filepath;
 	}
-	
+
+
+	/**
+	 * it reads the symptoms from the file ( data filepath) and return them
+	 * If no data is available, return an empty List
+	 * @return  a raw listing of all Symptoms obtained from the file, duplicates are possible/probable
+	 * @throws IOException  if problem in reading the list of symptoms
+	 */
 	@Override
 	public List<String> getSymptoms() throws IOException {
 

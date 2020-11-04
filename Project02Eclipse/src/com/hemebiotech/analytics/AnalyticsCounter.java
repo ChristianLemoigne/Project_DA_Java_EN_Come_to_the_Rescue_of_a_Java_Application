@@ -8,44 +8,61 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Read the symtoms,
- * Aggregaate the symptoms
- * Write the symptonsaggegated
- */
+ * This Class is sused to Read a list of medical symptoms,
+ * and to write a list of these symptoms aggregated.
+ * one line  for each symptom of the list
+ * */
+
 public class AnalyticsCounter {
 
-	private ISymptomReader readSymptomDataFromFile ;
-	private ISymptomWriter writeSymptomAggregatedIntoFile ;
+	private ISymptomReader readSymptomData ;
+	private ISymptomWriter writeSymptomAggregated ;
 
 	/**
-	 * En une phrase, dire ce que tu fais le constructeur
-	 * @param readSymptomDataFromFile interface du truc
-	 * @param writeSymptomAggregatedIntoFile  totootototot
+	 * this constructor inject the two dependencies below:
+	 * @param readSymptomData interface for readind the list of symptoms
+	 * @param writeSymptomAggregated  interface for writing the result on an output support
 	 */
-	public   AnalyticsCounter(ISymptomReader readSymptomDataFromFile, ISymptomWriter writeSymptomAggregatedIntoFile) {
-		this.readSymptomDataFromFile = readSymptomDataFromFile ;
-		this.writeSymptomAggregatedIntoFile =writeSymptomAggregatedIntoFile ;
+	public   AnalyticsCounter(ISymptomReader readSymptomData, ISymptomWriter writeSymptomAggregated) {
+		this.readSymptomData = readSymptomData ;
+		this.writeSymptomAggregated =writeSymptomAggregated ;
 	}
 
 	/**
-	 *
-	 * @return raconter ce que c'est censé  retourner  ( liste des symptoms avec doublons éventuels)
-	 * @throws IOException
+	 * it reads the symptoms by calling a dependency injected
+	 * @return  list of symptoms, with possibly several times the same symptom
+	 * @throws IOException  if problem in reading the list of symptoms
 	 */
 	public  List<String>  readSymptoms() throws IOException {
-		return readSymptomDataFromFile.getSymptoms() ;
+		return readSymptomData.getSymptoms() ;
 	}
 
+	/**
+	 * it aggregate the symptoms
+	 * @return  Map of symptoms, one line in output for each symptom in the input
+	 * @param listSymptoms  List of symptoms
+	 */
 	public  Map<String, Integer>  aggregateSymptoms(List<String> listSymptoms)   {
 		return aggregateDatas(listSymptoms) ;
 	}
 
+	/**
+	 * it sorts alphabetically the list of aggregated symptoms
+	 * @return  List of symptoms
+	 * @param mapSymptomsAggegated   map of  aggregated symptoms
+	 */
 	public  List<String>  sortListSymptoms(Map<String, Integer>  mapSymptomsAggegated)   {
 		return sortMapToList(mapSymptomsAggegated) ;
 	}
 
+	/**
+	 * it write the symptoms  by calling a dependency injected
+	 * @param listSymptomsSorted  List of symptoms sorted
+	 * @param mapSymptomsCount  map  of symptoms aggregated and their count, on line per symptom
+	 * @throws IOException  if problem in writing the list of symptoms
+	 */
 	public  void  writeSymptoms(List<String> listSymptomsSorted, Map<String, Integer> mapSymptomsCount  )  throws IOException {
-		writeSymptomAggregatedIntoFile.writeAggregateSymptoms(listSymptomsSorted, mapSymptomsCount);
+		writeSymptomAggregated.writeAggregateSymptoms(listSymptomsSorted, mapSymptomsCount);
 	}
 
 
